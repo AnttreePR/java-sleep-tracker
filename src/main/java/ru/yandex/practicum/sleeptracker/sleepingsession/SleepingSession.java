@@ -3,6 +3,7 @@ package ru.yandex.practicum.sleeptracker.sleepingsession;
 import ru.yandex.practicum.sleeptracker.exceptions.SleepStartLaterEnd;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class SleepingSession {
@@ -37,17 +38,17 @@ public class SleepingSession {
         return Duration.between(start, end).toMinutes();
     }
 
-    public boolean intersectsNightInterval() {
-        LocalDateTime nightStart = end.toLocalDate().atTime(0, 0);
-        LocalDateTime nightEnd = end.toLocalDate().atTime(6, 0);
-
-        boolean intersects = start.isBefore(nightEnd) && end.isAfter(nightStart);
-
-        return intersects;
+    public boolean intersectsNightInterval(LocalDate nightDate) {
+        LocalDateTime nightStart = nightDate.atTime(0, 0);
+        LocalDateTime nightEnd = nightDate.atTime(6, 0);
+        return start.isBefore(nightEnd) && end.isAfter(nightStart);
     }
+
 
     public boolean isNightSession() {
-        return intersectsNightInterval();
+        return intersectsNightInterval(start.toLocalDate())
+                || intersectsNightInterval(end.toLocalDate());
     }
+
 
 }
