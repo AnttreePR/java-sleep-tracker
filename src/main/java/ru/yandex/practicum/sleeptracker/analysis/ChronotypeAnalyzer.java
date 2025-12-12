@@ -3,7 +3,6 @@ package ru.yandex.practicum.sleeptracker.analysis;
 import ru.yandex.practicum.sleeptracker.sleepingsession.SleepingSession;
 
 import java.time.LocalTime;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
