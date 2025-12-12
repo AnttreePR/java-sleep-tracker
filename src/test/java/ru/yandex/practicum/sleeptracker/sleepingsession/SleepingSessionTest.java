@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class SleepingSessionTest {
 
     @Test
-    void nightSleep_crossesMidnight_true() {
+    void nightSleepCrossesMidnightTrue() {
         SleepingSession session = new SleepingSession(
                 LocalDateTime.of(2025, 10, 1, 23, 0),
                 LocalDateTime.of(2025, 10, 2, 3, 0),
@@ -21,7 +21,7 @@ class SleepingSessionTest {
     }
 
     @Test
-    void sleep_insideNight_true() {
+    void sleepInsideNightTrue() {
         SleepingSession session = new SleepingSession(
                 LocalDateTime.of(2025, 10, 2, 1, 0),
                 LocalDateTime.of(2025, 10, 2, 5, 0),
@@ -32,7 +32,7 @@ class SleepingSessionTest {
     }
 
     @Test
-    void sleep_afterSix_false() {
+    void sleepAfterSixFalse() {
         SleepingSession session = new SleepingSession(
                 LocalDateTime.of(2025, 10, 2, 7, 0),
                 LocalDateTime.of(2025, 10, 2, 10, 0),
@@ -43,7 +43,7 @@ class SleepingSessionTest {
     }
 
     @Test
-    void sleep_beforeMidnight_false() {
+    void sleepBeforeMidnightFalse() {
         SleepingSession session = new SleepingSession(
                 LocalDateTime.of(2025, 10, 1, 21, 0),
                 LocalDateTime.of(2025, 10, 1, 23, 0),
@@ -54,7 +54,7 @@ class SleepingSessionTest {
     }
 
     @Test
-    void sleep_endsAtMidnight_false() {
+    void sleepEndsAtMidnightFalse() {
         SleepingSession session = new SleepingSession(
                 LocalDateTime.of(2025, 10, 1, 22, 0),
                 LocalDateTime.of(2025, 10, 2, 0, 0),
@@ -65,7 +65,7 @@ class SleepingSessionTest {
     }
 
     @Test
-    void sleep_startsAtSix_false() {
+    void sleepStartsAtSixFalse() {
         SleepingSession session = new SleepingSession(
                 LocalDateTime.of(2025, 10, 2, 6, 0),
                 LocalDateTime.of(2025, 10, 2, 8, 0),
