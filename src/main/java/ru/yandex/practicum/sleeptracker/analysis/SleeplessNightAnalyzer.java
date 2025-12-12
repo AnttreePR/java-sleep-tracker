@@ -35,9 +35,8 @@ public class SleeplessNightAnalyzer implements Function<List<SleepingSession>, S
                 ? firstStart.toLocalDate().minusDays(1)
                 : firstStart.toLocalDate();
 
-        LocalDate lastNight = lastEnd.toLocalTime().isBefore(LocalTime.NOON)
-                ? lastEnd.toLocalDate().minusDays(1)
-                : lastEnd.toLocalDate();
+        LocalDate lastNight = lastEnd.toLocalDate();
+
 
         long insomniaCount = LongStream.rangeClosed(
                         firstNight.toEpochDay(),
