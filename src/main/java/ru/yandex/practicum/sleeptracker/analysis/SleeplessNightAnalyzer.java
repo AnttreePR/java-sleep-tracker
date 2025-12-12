@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.LongStream;
 
-public class SleeplessNightAnalyzer implements Function<List<SleepingSession>, SleepAnalysisResult<Long>> {
+public class SleeplessNightAnalyzer
+        implements Function<List<SleepingSession>, SleepAnalysisResult<Long>> {
 
     @Override
     public SleepAnalysisResult<Long> apply(List<SleepingSession> sessions) {
@@ -37,13 +38,12 @@ public class SleeplessNightAnalyzer implements Function<List<SleepingSession>, S
 
         LocalDate lastNight = lastEnd.toLocalDate();
 
-
         long insomniaCount = LongStream.rangeClosed(
                         firstNight.toEpochDay(),
                         lastNight.toEpochDay()
                 )
                 .mapToObj(LocalDate::ofEpochDay)
-                .filter(nightDate -> isSleeplessNight(nightDate, sessions))
+                .filter(nightDate -> isSleeplessNight(nightDate, sessions, firstStart, lastEnd))
                 .count();
 
         return new SleepAnalysisResult<>(
@@ -52,21 +52,22 @@ public class SleeplessNightAnalyzer implements Function<List<SleepingSession>, S
         );
     }
 
-    private boolean isSleeplessNight(LocalDate nightDate, List<SleepingSession> sessions) {
+    private boolean isSleeplessNight(
+            LocalDate nightDate,
+            List<SleepingSession> sessions,
+            LocalDateTime firstStart,
+            LocalDateTime lastEnd
+    ) {
 
         LocalDateTime nightStart = nightDate.atTime(0, 0);
         LocalDateTime nightEnd = nightDate.atTime(6, 0);
 
-        LocalDateTime firstStart = sessions.stream()
-                .map(SleepingSession::getStart)
-                .min(LocalDateTime::compareTo)
-                .orElseThrow();
-
-        if (nightEnd.isBefore(firstStart) || nightEnd.isEqual(firstStart)) {
+        if (nightEnd.isBefore(firstStart) || nightStart.isAfter(lastEnd)) {
             return false;
         }
 
         return sessions.stream()
+                .filter(SleepingSession::isNightSession)
                 .noneMatch(session ->
                         session.getStart().isBefore(nightEnd)
                                 && session.getEnd().isAfter(nightStart)
