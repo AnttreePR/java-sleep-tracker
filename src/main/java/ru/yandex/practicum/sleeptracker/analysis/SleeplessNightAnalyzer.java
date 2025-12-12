@@ -36,14 +36,14 @@ public class SleeplessNightAnalyzer
                 ? firstStart.toLocalDate().minusDays(1)
                 : firstStart.toLocalDate();
 
-        LocalDate lastNight = lastEnd.toLocalDate();
+        LocalDate lastNight = lastEnd.toLocalDate().plusDays(1);
 
         long insomniaCount = LongStream.rangeClosed(
                         firstNight.toEpochDay(),
                         lastNight.toEpochDay()
                 )
                 .mapToObj(LocalDate::ofEpochDay)
-                .filter(nightDate -> isSleeplessNight(nightDate, sessions, firstStart, lastEnd))
+                .filter(nightDate -> isSleeplessNight(nightDate, sessions))
                 .count();
 
         return new SleepAnalysisResult<>(
@@ -54,17 +54,10 @@ public class SleeplessNightAnalyzer
 
     private boolean isSleeplessNight(
             LocalDate nightDate,
-            List<SleepingSession> sessions,
-            LocalDateTime firstStart,
-            LocalDateTime lastEnd
+            List<SleepingSession> sessions
     ) {
-
         LocalDateTime nightStart = nightDate.atTime(0, 0);
         LocalDateTime nightEnd = nightDate.atTime(6, 0);
-
-        if (nightEnd.isBefore(firstStart) || nightStart.isAfter(lastEnd)) {
-            return false;
-        }
 
         return sessions.stream()
                 .filter(SleepingSession::isNightSession)
