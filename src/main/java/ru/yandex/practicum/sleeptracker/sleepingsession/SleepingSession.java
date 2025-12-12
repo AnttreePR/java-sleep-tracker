@@ -38,16 +38,20 @@ public class SleepingSession {
         return Duration.between(start, end).toMinutes();
     }
 
+    public boolean intersectsNightInterval() {
+        return intersectsNightInterval(start.toLocalDate())
+                || intersectsNightInterval(end.toLocalDate());
+    }
+
+
     public boolean intersectsNightInterval(LocalDate nightDate) {
         LocalDateTime nightStart = nightDate.atTime(0, 0);
         LocalDateTime nightEnd = nightDate.atTime(6, 0);
         return start.isBefore(nightEnd) && end.isAfter(nightStart);
     }
 
-
     public boolean isNightSession() {
-        return intersectsNightInterval(start.toLocalDate())
-                || intersectsNightInterval(end.toLocalDate());
+        return intersectsNightInterval();
     }
 
 

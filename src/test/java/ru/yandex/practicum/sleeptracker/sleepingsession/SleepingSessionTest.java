@@ -12,8 +12,8 @@ class SleepingSessionTest {
     @Test
     void nightSleep_crossesMidnight_true() {
         SleepingSession session = new SleepingSession(
-                LocalDateTime.of(2025, 10, 3, 2, 0),
-                LocalDateTime.of(2025, 10, 3, 7, 0),
+                LocalDateTime.of(2025, 10, 1, 23, 0),
+                LocalDateTime.of(2025, 10, 2, 3, 0),
                 SleepQuality.GOOD
         );
 
