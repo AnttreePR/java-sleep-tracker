@@ -5,7 +5,7 @@ import ru.yandex.practicum.sleeptracker.sleepingsession.SleepingSession;
 import java.util.List;
 import java.util.function.Function;
 
-public class AverageDurationAnalyzer implements Function<List<SleepingSession>, SleepAnalysisResult<Double>>{
+public class AverageDurationAnalyzer implements Function<List<SleepingSession>, SleepAnalysisResult<Double>> {
 
     @Override
     public SleepAnalysisResult<Double> apply(List<SleepingSession> sessions) {
