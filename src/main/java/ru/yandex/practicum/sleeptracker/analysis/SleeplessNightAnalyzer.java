@@ -57,6 +57,15 @@ public class SleeplessNightAnalyzer implements Function<List<SleepingSession>, S
         LocalDateTime nightStart = nightDate.atTime(0, 0);
         LocalDateTime nightEnd = nightDate.atTime(6, 0);
 
+        LocalDateTime firstStart = sessions.stream()
+                .map(SleepingSession::getStart)
+                .min(LocalDateTime::compareTo)
+                .orElseThrow();
+
+        if (nightEnd.isBefore(firstStart) || nightEnd.isEqual(firstStart)) {
+            return false;
+        }
+
         return sessions.stream()
                 .noneMatch(session ->
                         session.getStart().isBefore(nightEnd)
